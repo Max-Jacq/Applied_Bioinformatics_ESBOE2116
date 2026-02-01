@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Pipeline de génomique – Applied Bioinformatics</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; margin: 40px; }
+    h1, h2, h3 { color: #2c3e50; }
+    code, pre { background: #f4f4f4; padding: 10px; display: block; overflow-x: auto; }
+    .step { margin-bottom: 40px; }
+    .note { background: #eef; padding: 10px; border-left: 4px solid #447; }
+  </style>
+</head>
+<body>
