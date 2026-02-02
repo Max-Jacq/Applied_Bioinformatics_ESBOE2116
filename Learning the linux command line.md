@@ -289,3 +289,70 @@ Remember, your current path can be found using `pwd`. A useful command for print
 ```
 realpath file.txt
 ```
+#### Downloading a file off the internet
+
+```
+wget <url>
+```
+
+#### File compression/uncompression
+
+This is done using programs such as `tar`, and `gzip` and `gunzip`.
+e.g.,
+```
+gzip file.txt # to compress it
+gunzip file.txt.gz # to uncompress it
+```
+
+### More tips
+
+#### Use tab to autocomplete
+
+Use tab for autocompletion! This will speed up your command-line work dramatically.
+More here: [tab-autocomplete](https://www.howtogeek.com/195207/use-tab-completion-to-type-commands-faster-on-any-operating-system/)
+
+#### Use Ctrl-C to interrupt or end a process
+
+If you need to interrupt a command or process that you have started, press Ctrl-C.
+
+#### Other tips for becoming a linux power user
+
+[Linux Tips](https://www.howtogeek.com/110150/become-a-linux-terminal-power-user-with-these-8-tricks/)
+
+
+---
+
+
+# ASSIGNMENT QUESTIONS
+
+<b>PLEASE COMPLETE ASSIGNMENT 1 ON LEARN.</b>
+This can be found under <b>Quizzes</b>.
+
+You will be asked to answer the following questions.
+
+Hint: remember to use `man` if you want to explore added functionality of commands. Also, the program `compseq` may be useful to answer some of these questions.
+
+Download and uncompress this file containing the genome sequence of E. coli H20 <!--K12--> https://github.com/doxeylab/learn-genomics-in-linux/raw/master/task1/e-coli-genome.fasta.gz 
+
+Q1 - What is the size of the uncompressed file in megabytes (round to one decimal place)?
+
+Q2 - What is the header (first) line of the file?
+
+Q3 - How many characters are in this file (header plus genome)?
+
+Q4 - What are the last five bases in the genome?
+
+Q5 - What is the length of the genome (# bases)?
+
+Q6 - What base (A, C, G, or T) is most common in the file?
+
+Q7 - What is the GC content of the genome?
+
+Q8 - What is the most common trinucleotide in the file?
+
+Q9 - How many times does the word "AATGAGAGG" occur in the genome sequence? Do not use compseq to answer this one.
+
+Q10 - What is the answer to the above question if you also include matches on the reverse complement of the genome sequence? Again, do not use compseq to answer this one.
+
+
+#### Congratulations. You are now finished.
