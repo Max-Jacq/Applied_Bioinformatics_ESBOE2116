@@ -23,9 +23,9 @@ Liège, Université de Mons, and Université de Namur <br>
 
 Check out all the possible clusters available to you through CECI at <br>
 https://www.ceci-hpc.be/ and take time to navigate through the website. <br>
-  -What is the cluster associated with UNamur?  <br>
-  -What is the maximum RAM and CPU that you can access through this cluster? <br>
-  Can you explain what is RAM and CPU in your own words? <br>
+  - What is the cluster associated with UNamur?  <br>
+  - What is the maximum RAM and CPU that you can access through this cluster? <br>
+  - Can you explain what is RAM and CPU in your own words? <br>
 
 To connect to the CECI cluster, you will need to use the ssh command <br>
 that allow to connect to a remote machine. We are going to use a <br>
@@ -39,7 +39,7 @@ In the cluster, you will have access to a personal space. <br>
 > This space has a limited amount of memory of 100G. <br>
 
 To download and upload files to and from the CECI, we will see two techniques. <br>
-  -The first one is in command line and the second technique is to use a file manager. <br>
-    Example command line: scp ./file.txt hyades:~/ <br>
-    For convenience, you can install the file manager here: https://winscp.net/eng/download.php <br>
-  -Follow the instructions given in class to make a connection to your home directory. <br>
+  - The first one is in command line and the second technique is to use a file manager. <br>
+     Example command line: `scp ./file.txt hyades:~/` <br>
+     For convenience, you can install the file manager here: https://winscp.net/eng/download.php <br>
+  - Follow the instructions given in class to make a connection to your home directory. <br>
