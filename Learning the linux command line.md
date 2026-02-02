@@ -1,0 +1,291 @@
+# 1. Learning the Linux shell
+
+## Requirements
+
+* Access to a linux-based OS running BASH
+
+---
+
+
+## What is the Linux Shell?
+
+The <i>shell</i> is a command-line programming language for interacting with the [UNIX](https://en.wikipedia.org/wiki/Unix_shell) operating system. <br>
+There are several different shell languages. What we will be using in this course is a popular shell flavor called [<b>BASH</b>](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) <br>
+We will be learning basic commands, but BASH is actually a language that can perform complex programming tasks. <br>
+
+
+## Getting Started
+
+Before you can begin with the coding exercises, you must have access to a linux machine. <br>
+You can either use your own local system or a remote server <!--VM--> that has been set up for you. <br>
+
+### Accessing the remote server <!--VM-->
+
+<!--If you have been given access to a remote server VM, you can access it either through the url that has been given to you, or directly through the Terminal like this:-->
+You can access the remote server through a terminal (full instructions on LEARN) like this:
+
+```
+ssh yourUserName@genomics1.private.uwaterloo.ca
+```
+<!--ssh -i /path/to/your/.ssh/publickey yourUserName@remoteIP-->
+
+When you are done, you can leave your session by typing...
+
+```
+exit
+```
+
+## Once you are logged on | Learning the command-line
+
+If you have logged in correctly, you should see a welcome screen.
+
+You are now in a unix command-line environment. For more information and instructions:
+
+* [CodeAcademy](https://www.codecademy.com/learn/learn-the-command-line) - Learn the command line
+* [TeachingUnix](https://info-ee.surrey.ac.uk/Teaching/Unix/) - Another Unix Tutorial
+* [BasicCommands](http://mally.stanford.edu/~sr/computing/basic-unix.html) - List of common commands
+
+## A Linux Shell primer
+
+### Navigating files/folders
+
+When you log in, by default you start in your home directory.
+
+Type...
+
+```
+pwd
+```
+
+And this will print to the screen your current location (e.g., /home/username)
+
+You can always get back to your home folder by typing
+
+```
+cd
+```
+
+To view the contents of your current folder type
+
+```
+ls
+```
+
+To make the folder "task1", type
+
+```
+mkdir task1
+```
+
+Change directory into 'task1' folder
+
+```
+cd task1
+```
+
+And now create a file called file.txt
+
+```
+>file.txt
+```
+
+Open the file with `nano`. This is one built-in text editor. There are others.
+
+```
+nano file.txt
+```
+
+Now enter a few lines of text, type 'ctrl-o' and then 'ctrl-x' to save and exit
+
+To print to the screen the contents of your file
+
+```
+cat file.txt
+```
+
+Other ways of viewing your file
+
+```
+less file.txt  #type q to exit
+more file.txt
+head file.txt
+head -n 10 file.txt # first 10 lines of your file
+tail file.txt
+tail -n 10 file.txt # last 10 lines of your file
+```
+
+Size of your file
+
+```
+du file.txt
+du -h file.txt # in human-readable output (byte, kb, mb, etc.)
+```
+
+To count the number of words and lines in your file
+
+```
+wc file.txt #words
+wc -l file.txt #lines
+wc -m file.txt #characters
+```
+
+To copy the file to a new file
+
+```
+cp file.txt newfile.txt
+```
+
+You can also 'move' a file to a new location or rename it using `mv`.
+
+To combine both files together into a third file
+
+```
+cat file.txt newfile.txt > thirdfile.txt
+```
+
+The '>' redirects the output of the commands on the left of it to a file specified on the right.
+
+Delete the file (note: be careful since there is no Trash Bin)
+
+```
+rm file.txt
+```
+
+Print contents of all .txt files in current folder. * acts as a wildcard
+
+```
+cat *.txt
+```
+
+Delete all .txt files in the current folder
+
+```
+rm *.txt
+```
+
+Delete all files in the current folder
+
+```
+rm *
+```
+
+Move back to the previous folder
+
+```
+cd ..
+```
+
+And delete the folder 'task1'
+
+```
+rmdir task1
+```
+
+### Getting help on linux commands and program usage
+
+For most commands, you can get more information on their usage by typing `man` 'command'.
+
+e.g., try
+
+```
+man ls
+#type 'q' to quit
+#Note: this line and the line above are interpreted as comments since they start with the "#" character. They will not be executed as a command.
+```
+
+`man` will work with some bioinformatics tools. However, not always.
+
+e.g., for help on the `blastp` tool, type
+
+```
+blastp -h # or
+blastp --help
+```
+
+### Additional operations
+
+#### Pattern finding with grep
+
+```
+grep "word" file.txt  # prints lines in file.txt containing "word"
+
+grep -o "word" file.txt #print out all the occurrences of "word"
+
+grep -c "word" file.txt # counts the number of lines containing "word" in file.txt
+
+```
+
+Note: Be careful when using `grep` to analyze files containing nucleic acid or protein sequence data.
+
+e.g., your FASTA file may be separated into multiple lines like this:
+
+```
+>myFastaSequence
+ATCGACGTTATCGACTAGCTAT
+TCGGCGCGGTATTAGCGATTCG
+TAATATCGGCGCGATATATCGA
+```
+
+instead of this:
+
+```
+>myFastaSequence
+ATCGACGTTATCGACTAGCTATTCGGCGCGGTATTAGCGATTCGTAATATCGGCGCGATATATCGA
+```
+
+Therefore, `grep` may miss some words that span multiple lines.
+
+Fortunately, there is a useful tool called `compseq` that be used to examine the [<b>k-mer</b>](https://en.wikipedia.org/wiki/K-mer) composition of a FASTA file.
+It can be run like this:
+
+```
+compseq file.fasta
+
+#or
+
+compseq -reverse file.fasta  #also counts occurrences on the reverse complement of the sequence
+
+```
+
+
+
+#### Piping commands
+
+We can also chain together multiple commands like this using the `|` (pipe) operator.
+
+```
+grep "word" file.txt | wc -l  # will count the number of lines containing the word "word"
+
+# or alternatively
+
+cat file.txt | grep "word" | wc -l  # does the same thing as above
+
+# if we want to count ALL the occurrences of "word" in the file (allowing multiple per line), we can do
+
+grep -o "word" file.txt | wc -l
+
+```
+
+#### Copying a file to and from a remote server
+
+To
+```
+scp /path/to/file.txt yourUserName@genomics1.private.uwaterloo.ca
+```
+<!--scp /path/to/file.txt username@remoteserver.com:/path/to/location/.-->
+
+From
+```
+scp yourUserName@genomics1.private.uwaterloo.ca:/path/to/file.txt /path/to/location/
+```
+<!--scp username@remoteserver.com:/path/to/file.txt /path/to/location/.-->
+
+<!-- #### Uploading/downloading files via Google cloud's ssh browser
+
+If you are using ssh in a browser window, you can easily upload and download files via the browser.
+Look in the rop right corner for the options window, click `Download file` ([see here](https://raw.githubusercontent.com/doxeylab/learn-genomics-in-linux/master/task1/gcloud-download.png)) and then enter in the path to your file. -->
+Remember, your current path can be found using `pwd`. A useful command for printing out the path to your file is:
+
+```
+realpath file.txt
+```
