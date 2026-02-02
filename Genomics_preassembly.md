@@ -39,9 +39,9 @@ Read file bit by bit <br>
 
 
 # 🔍 1.Quality Check
-FastQC produces a visual report (HTML) describing the quality of the reads: quality per base, GC content, presence of adapters, duplication levels, etc.
+FastQC produces a visual report (HTML) describing the quality of the reads: quality per base, GC content, presence of adapters, duplication levels, etc. <br>
 This report helps you decide whether trimming is necessary and which parameters to use. <br>
-You can find more information on the following website: https://olvtools.com/en/documents/fastqc
+You can find more information on the following website: https://olvtools.com/en/documents/fastqc <br>
 
 ```
 ml releases/2022b
@@ -57,17 +57,17 @@ Explore and inspect the FastQC report for mt_reads.fastq.
 
 Q1) Which of the following statements is correct?
 
-The reads passed all of the quality control measures
-The reads failed all of the quality control measures
-The reads passed some of the quality control measures but failed others
+The reads passed all of the quality control measures <br>
+The reads failed all of the quality control measures <br>
+The reads passed some of the quality control measures but failed others <br>
 
-Q2) The per-base sequence quality is lowest at the _____ of the reads.
+Q2) The per-base sequence quality is lowest at the _____ of the reads. <br>
 
-Q3) Most of the reads were assigned a quality (Phred) score of _____ .
+Q3) Most of the reads were assigned a quality (Phred) score of _____. <br>
 
-Q4) Examine the per-base sequence content. The base composition is unusual/unexpected for position _____ to position _____ of the reads.
+Q4) Examine the per-base sequence content. The base composition is unusual/unexpected for position _____ to position _____ of the reads. <br>
 
-Q5) This unexpected composition may be due to the inclusion of _____ .
+Q5) This unexpected composition may be due to the inclusion of _____. <br>
 
 ## Job SLURM (script via nano)
 
