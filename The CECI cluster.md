@@ -38,8 +38,56 @@ In the cluster, you will have access to a personal space. <br>
 > [!WARNING] <br>
 > This space has a limited amount of memory of 100G. <br>
 
-To download and upload files to and from the CECI, we will see two techniques. <br>
-  - The first one is in command line and the second technique is to use a file manager. <br>
-     Example command line: `scp ./file.txt hyades:~/` <br>
-     For convenience, you can install the file manager here: https://winscp.net/eng/download.php <br>
-  - Follow the instructions given in class to make a connection to your home directory. <br>
+# 3. Downloading data
+## Directly from WSL or Hyades (best practice)
+
+Whenever possible, it is preferable to download data directly where the computation will take place, instead of transferring large files from your personal computer.
+
+From WSL or directly on Hyades:
+```
+wget https://example.org/data/SRR24965506.1
+#This command download the file into your current directory
+```
+Check the download:
+```
+ls -lh
+```
+
+# 4. Transferring files using the command line (recommended)
+Working from the command line is the **recommended method** on a computing cluster, as it allows better control and reproducibility.
+
+Before transferring files, make sure that:
+- you know where your file is located on your local machine,
+- you are connected to the correct directory.
+- 
+## Check your local directory
+On your local machine (Linux, macOS, or WSL), move to the directory containing your file:
+```
+cd ~/Downloads
+ls
+```
+
+## Uploading a file to Hyades
+To upload a file to your home directory on Hyades:
+```
+scp SRR24965506.1.fastq.gz <user>@hyades.ptci.unamur.be:/home/<user>/
+```
+Replace `user` with your UNamur login.You will be prompted for your UNamur password (nothing will appear when typing — this is normal). If the command ends without error messages, the transfer was successful.
+
+## Uploading a directory
+If you want to transfer several files at once, place them in a directory and use:
+```
+scp -r data/ <user>@hyades.ptci.unamur.be:/home/<user>/
+```
+
+Finally, check the transfer.
+
+## 5. Understanding SRA files and conversion to FASTQ
+Files downloaded from NCBI SRA (e.g. SRR24965506.1) are not directly usable for analysis.
+They must first be converted into FASTQ format.
+
+Converting SRA to FASTQ (Using SRA-Toolkit)
+```
+fasterq-dump SRR24965506.1 --split-files
+```
+
