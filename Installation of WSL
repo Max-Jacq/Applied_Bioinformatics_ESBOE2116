@@ -1,0 +1,55 @@
+# Installing WSL (Windows Subsystem for Linux) – Windows 11
+
+This guide explains how to install **WSL 2** and **Ubuntu** on **Windows 11**.  
+WSL allows you to run a Linux environment directly on Windows, without using a full virtual machine.
+
+---
+
+# Goal
+
+After completing this installation, you will be able to:
+- use a Linux terminal (Ubuntu)
+- compile and run code
+- use tools like Git, Python, Node.js, Docker, etc.
+- work in an environment similar to real Linux servers
+
+---
+
+# Requirements
+
+- Windows 11 (version 22H2 or newer)
+- **Administrator** privileges
+- Virtualization enabled in BIOS/UEFI
+
+👉 To check virtualization status:  
+Task Manager → **Performance** → **CPU** → *Virtualization: Enabled*
+
+---
+
+# Automatic Installation
+
+## Open PowerShell as Administrator
+- Right-click on the **Start** menu
+- Select **Terminal (Adm**
+
+## Run the installation command (on Powershell)
+```
+wsl --install
+```
+## Restart your computer
+The restart is required!
+
+## Verify the installation
+Run the next command on Powershell
+```
+wsl --status
+```
+You should see Ubuntu running with WSL 2.
+
+# Lauch Linux
+From the Start menu → Ubuntu
+or
+From PowerShell
+```
+wsl
+```
