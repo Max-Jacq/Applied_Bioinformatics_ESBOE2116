@@ -101,7 +101,7 @@ This is the final step, preparing students for **real-world bioinformatics workf
 
 - Basic computer literacy
 - No prior Linux or bioinformatics experience required
-- Curiosity and willingness to practice 😉
+- Curiosity and willingness to practice
 
 ---
 
