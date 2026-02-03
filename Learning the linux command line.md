@@ -325,9 +325,6 @@ If you need to interrupt a command or process that you have started, press Ctrl-
 
 # ASSIGNMENT QUESTIONS
 
-<b>PLEASE COMPLETE ASSIGNMENT 1 ON LEARN.</b>
-This can be found under <b>Quizzes</b>.
-
 You will be asked to answer the following questions.
 
 Hint: remember to use `man` if you want to explore added functionality of commands. Also, the program `compseq` may be useful to answer some of these questions.
