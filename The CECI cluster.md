@@ -39,7 +39,7 @@ In the cluster, you will have access to a personal space. <br>
 > This space has a limited amount of memory of 100G. <br>
 
 # 3. Downloading data
-## Directly from WSL or Hyades (best practice)
+## Directly from WSL or Hyades
 
 Whenever possible, it is preferable to download data directly where the computation will take place, instead of transferring large files from your personal computer.
 
@@ -53,7 +53,7 @@ Check the download:
 ls -lh
 ```
 
-# 4. Transferring files using the command line (recommended)
+# 4. Transferring files using the command line
 Working from the command line is the **recommended method** on a computing cluster, as it allows better control and reproducibility.
 
 Before transferring files, make sure that:
