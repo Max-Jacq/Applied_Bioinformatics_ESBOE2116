@@ -25,7 +25,7 @@ You can either use your own local system or a remote server <!--VM--> that has b
 You can access the remote server through a terminal (full instructions on LEARN) like this:
 
 ```
-ssh yourUserName@genomics1.private.uwaterloo.ca
+ssh youreid@hyades.ptci.unamur.be
 ```
 <!--ssh -i /path/to/your/.ssh/publickey yourUserName@remoteIP-->
 
@@ -270,13 +270,13 @@ grep -o "word" file.txt | wc -l
 
 To
 ```
-scp /path/to/file.txt yourUserName@genomics1.private.uwaterloo.ca
+scp /path/to/file.txt youreid@yades.ptci.unamur.be
 ```
 <!--scp /path/to/file.txt username@remoteserver.com:/path/to/location/.-->
 
 From
 ```
-scp yourUserName@genomics1.private.uwaterloo.ca:/path/to/file.txt /path/to/location/
+scp youreid@hyades.ptci.unamur.be:/path/to/file.txt /path/to/location/
 ```
 <!--scp username@remoteserver.com:/path/to/file.txt /path/to/location/.-->
 
