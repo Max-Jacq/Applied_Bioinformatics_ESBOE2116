@@ -51,3 +51,45 @@ mkdir -p "$OUTDIR"
 # Run FastQC on all FASTQ files in the folder
 fastqc -t 2 -o "$OUTDIR" *.fastq *.fastq.gz
 ```
+
+# 3.Adapter trimming
+## Why trimming is important in NGS data analysis
+
+Raw sequencing reads often contain technical artifacts such as adapter sequences, low-quality bases at the read ends, and sequencing errors. If these issues are not removed, they can negatively affect downstream analyses, including read mapping, genome assembly, and variant calling. Trimming tools like Trimmomatic are used to clean raw FASTQ files by removing adapters and low-quality regions, and by discarding reads that are too short after trimming. This preprocessing step improves the overall quality of the data, increases mapping accuracy, reduces false positives, and leads to more reliable biological results.
+
+```
+#!/bin/bash
+#SBATCH --job-name=trimmomatic
+#SBATCH --time=02:00:00
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=8G
+#SBATCH --partition=batch
+#SBATCH --output=trimmomatic_%j.out
+#SBATCH --error=trimmomatic_%j.err
+
+module purge
+module load releases/2022b
+module load Trimmomatic/0.39-Java-11
+
+R1=sample_R1.fastq
+R2=sample_R2.fastq
+
+P1=sample_R1_trimmed.fastq
+U1=sample_R1_unpaired.fastq
+P2=sample_R2_trimmed.fastq
+U2=sample_R2_unpaired.fastq
+
+ADAPTERS=$EBROOTTRIMMOMATIC/adapters/TruSeq3-PE.fa
+
+trimmomatic PE \
+  -threads 4 \
+  "$R1" "$R2" \
+  "$P1" "$U1" \
+  "$P2" "$U2" \
+  ILLUMINACLIP:$ADAPTERS:2:30:10 \
+  LEADING:3 \
+  TRAILING:3 \
+  SLIDINGWINDOW:4:20 \
+  MINLEN:50
+```
