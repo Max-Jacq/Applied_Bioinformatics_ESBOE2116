@@ -52,7 +52,7 @@ mkdir -p "$OUTDIR"
 fastqc -t 2 -o "$OUTDIR" *.fastq *.fastq.gz
 ```
 
-# 3.Adapter trimming
+# 2.Adapter trimming
 ## Why trimming is important in NGS data analysis
 
 Raw sequencing reads often contain technical artifacts such as adapter sequences, low-quality bases at the read ends, and sequencing errors. If these issues are not removed, they can negatively affect downstream analyses, including read mapping, genome assembly, and variant calling. Trimming tools like Trimmomatic are used to clean raw FASTQ files by removing adapters and low-quality regions, and by discarding reads that are too short after trimming. This preprocessing step improves the overall quality of the data, increases mapping accuracy, reduces false positives, and leads to more reliable biological results.
