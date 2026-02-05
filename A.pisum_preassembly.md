@@ -97,3 +97,19 @@ trimmomatic PE \
 
 ## Why using fastqc after trimming is important in data analysis
 After trimming, it is essential to run FastQC again in order to evaluate the quality of the processed reads and to verify that the trimming step was effective. The second FastQC report allows us to confirm that adapter sequences have been successfully removed, that low-quality bases at the read ends have been reduced, and that overall read quality has improved. By comparing FastQC reports before and after trimming, we can directly assess the impact of trimming and ensure that the cleaned reads are suitable for downstream analyses such as read alignment, genome assembly, or variant calling.
+
+# Optional question (with the `mt_reads.fastq` file or not)
+
+Q1) Which of the following statements is correct?
+
+The reads passed all of the quality control measures
+The reads failed all of the quality control measures
+The reads passed some of the quality control measures but failed others
+
+Q2) The per-base sequence quality is lowest at the___of the reads.
+
+Q3) Most of the reads were assigned a quality (Phred) score of____.
+
+Q4) Examine the per)base sequence content. The base composition is unusual/unexpected for position____to position_____of the reads.
+
+Q5) This unexpected composition may due to the inclusion of____.
