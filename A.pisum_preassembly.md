@@ -21,6 +21,10 @@ prefetch DRR504715
 fasterq-dump DRR504715 --split-files --threads 8
 ```
 
+```
+wget https://ftp.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByRun/sra/DRR/DRR504/DRR504715/DRR504715.sra
+```
+
 # 1.Quality Check
 FastQC produces a visual report (HTML) describing the quality of the reads: quality per base, GC content, presence of adapters, duplication levels, etc. <br>
 This report helps you decide whether trimming is necessary and which parameters to use. <br>
