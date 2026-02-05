@@ -29,10 +29,10 @@ You can find more information on the following website: https://olvtools.com/en/
 ```
 #!/bin/bash
 #SBATCH --job-name=fastqc
-#SBATCH --time=01:00:00
+#SBATCH --time=03:00:00
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=2
-#SBATCH --mem=2G
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=16G
 #SBATCH --partition=batch
 #SBATCH --output=fastqc_%j.out
 #SBATCH --error=fastqc_%j.err
