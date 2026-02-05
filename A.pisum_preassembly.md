@@ -102,9 +102,9 @@ After trimming, it is essential to run FastQC again in order to evaluate the qua
 
 Q1) Which of the following statements is correct?
 
-The reads passed all of the quality control measures
-The reads failed all of the quality control measures
-The reads passed some of the quality control measures but failed others
+The reads passed all of the quality control measures <br>
+The reads failed all of the quality control measures <br>
+The reads passed some of the quality control measures but failed others <br>
 
 Q2) The per-base sequence quality is lowest at the___of the reads.
 
