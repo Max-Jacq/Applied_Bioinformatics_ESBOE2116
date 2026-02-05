@@ -49,7 +49,7 @@ OUTDIR=FastQC_results
 mkdir -p "$OUTDIR"
 
 # Run FastQC on all FASTQ files in the folder
-fastqc -t 2 -o "$OUTDIR" *.fastq *.fastq.gz
+fastqc -t 4 -o "$OUTDIR" *.fastq *.fastq.gz
 ```
 
 # 2.Adapter trimming
