@@ -1,4 +1,4 @@
-#  🛠 0.Requirements
+#  0.Requirements
 
 ## Load the commun "releases" environment
 ml releases/2022b
@@ -38,7 +38,7 @@ less file
 Read file bit by bit <br>
 
 
-# 🔍 1.Quality Check
+# 1.Quality Check
 FastQC produces a visual report (HTML) describing the quality of the reads: quality per base, GC content, presence of adapters, duplication levels, etc. <br>
 This report helps you decide whether trimming is necessary and which parameters to use. <br>
 You can find more information on the following website: https://olvtools.com/en/documents/fastqc <br>
@@ -101,7 +101,7 @@ sbatch run_fastqc.sbatch
 squeue -u $USER    # vérifier la file d'attente
 ```
 
-# ✂️ 2.Adapter Trimming
+# 2.Adapter Trimming
 
 Trim Galore delete:
   -Residual adapters,
@@ -137,7 +137,7 @@ ml TrimGalore/0.6.7
 mkdir -p trimmed
 trim_galore --paired --cores 4 sample_R1.fastq.gz sample_R2.fastq.gz -o trimmed/
 ```
-# 3. Post-trimming
+# Post-trimming
 
 ```
 #FastQC
