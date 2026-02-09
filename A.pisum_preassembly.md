@@ -11,14 +11,16 @@ Here is the NCBI link:
 #SBATCH --output=PRJEB51899.out
 #SBATCH --error=PRJEB51899.err
 
+# ---Charge les modules nécessaires---
+module purge
 module load releases/2020b
 module load SRA-Toolkit/2.10.9-gompi-2020b
 
-
+# ---Téléchargement du fichier de séquençage depuis la base de données SRA (Sequence Read Archive)---
 prefetch PRJEB51899
 
-# Conversion rapide en FASTQ
-fasterq-dump /home/your_eid/PRJEB51899 --split-files --threads 8
+# ---Conversion rapide du fichier SRA en fichier .fastq---
+fasterq-dump /home/your_eid/PRJEB51899/ --split-files --threads 8
 ```
 
 ```
@@ -32,28 +34,26 @@ You can find more information on the following website: https://olvtools.com/en/
 
 ```
 #!/bin/bash
-#SBATCH --job-name=fastqc
-#SBATCH --time=03:00:00
+#SBATCH --job-name=fastqc_DRR504715
+#SBATCH --time=06:00:00
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=8
 #SBATCH --mem=16G
 #SBATCH --partition=batch
 #SBATCH --output=fastqc_%j.out
 #SBATCH --error=fastqc_%j.err
+#SBATCH --mail-user=maxence.jacquet@unamur.be
+#SBATCH --mail-type=END,FAIL
 
 module purge
 module load releases/2022b
 module load FastQC/0.11.9-Java-11
 
-# Folders
-INPUT_DIR=$PWD
-
-# Results folder
-OUTDIR=FastQC_results
+# Dossier de sortie
+OUTDIR=/home/maxenjac/results/FastQC/DRR504175
 mkdir -p "$OUTDIR"
 
-# Run FastQC on all FASTQ files in the folder
-fastqc -t 4 -o "$OUTDIR" *.fastq *.fastq.gz
+fastqc -t 8 -o "$OUTDIR" /home/maxenjac/data/Spiroplasma/DRR504715.fastq
 ```
 
 # 2.Adapter trimming
@@ -62,40 +62,33 @@ fastqc -t 4 -o "$OUTDIR" *.fastq *.fastq.gz
 Raw sequencing reads often contain technical artifacts such as adapter sequences, low-quality bases at the read ends, and sequencing errors. If these issues are not removed, they can negatively affect downstream analyses, including read mapping, genome assembly, and variant calling. Trimming tools like Trimmomatic are used to clean raw FASTQ files by removing adapters and low-quality regions, and by discarding reads that are too short after trimming. This preprocessing step improves the overall quality of the data, increases mapping accuracy, reduces false positives, and leads to more reliable biological results.
 
 ```
-#!/bin/bash
-#SBATCH --job-name=trimmomatic
-#SBATCH --time=02:00:00
+##!/bin/bash
+#SBATCH --job-name=porechop
+#SBATCH --time=12:00:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
-#SBATCH --mem=8G
-#SBATCH --partition=batch
-#SBATCH --output=trimmomatic_%j.out
-#SBATCH --error=trimmomatic_%j.err
+#SBATCH --mem=64G
+#SBATCH --mail-user=maxence.jacquet@unamur.be
+#SBATCH --mail-type=ALL
+
+set -euo pipefail
 
 module purge
-module load releases/2022b
-module load Trimmomatic/0.39-Java-11
+module load Porechop/0.2.4-GCCcore-11.2.0
 
-R1=sample_R1.fastq
-R2=sample_R2.fastq
+# --- Scratch ---
+SCRATCH="$HOME/scratch/$SLURM_JOB_ID"
+mkdir -p "$SCRATCH"
+cd "$SCRATCH"
 
-P1=sample_R1_trimmed.fastq
-U1=sample_R1_unpaired.fastq
-P2=sample_R2_trimmed.fastq
-U2=sample_R2_unpaired.fastq
+# ---Copier les fichiers nécessaires dans scratch---
+cp /home/maxenjac/data/DRR504715/DRR504715.fastq .
 
-ADAPTERS=$EBROOTTRIMMOMATIC/adapters/TruSeq3-PE.fa
+# ---Lancer Porechop---
+porechop -i DRR504715.fastq -o DRR504715.trim.fastq -t 4
 
-trimmomatic PE \
-  -threads 4 \
-  "$R1" "$R2" \
-  "$P1" "$U1" \
-  "$P2" "$U2" \
-  ILLUMINACLIP:$ADAPTERS:2:30:10 \
-  LEADING:3 \
-  TRAILING:3 \
-  SLIDINGWINDOW:4:20 \
-  MINLEN:50
+# ---Copier le résultat final dans le dossier permanent---
+cp DRR504715.trim.fastq /home/maxenjac/results/porechop/
 ```
 # 4.Quality filtering
 
