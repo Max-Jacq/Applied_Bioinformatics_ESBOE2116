@@ -4,21 +4,21 @@ Here is the NCBI link:
 
 ```
 #!/bin/bash
-#SBATCH --job-name=DRR504715
+#SBATCH --job-name=PRJEB51899
 #SBATCH --time=48:00:00
 #SBATCH --mem=64G
 #SBATCH --cpus-per-task=8
-#SBATCH --output=DRR504715.out
-#SBATCH --error=DRR504715.err
+#SBATCH --output=PRJEB51899.out
+#SBATCH --error=PRJEB51899.err
 
 module load releases/2020b
 module load SRA-Toolkit/2.10.9-gompi-2020b
 
 
-prefetch DRR504715
+prefetch PRJEB51899
 
-# Fast conversion to FASTQ
-fasterq-dump DRR504715 --split-files --threads 8
+# Conversion rapide en FASTQ
+fasterq-dump /home/your_eid/PRJEB51899 --split-files --threads 8
 ```
 
 ```
