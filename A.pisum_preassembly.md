@@ -22,7 +22,7 @@ prefetch PRJEB51899
 # ---Conversion rapide du fichier SRA en fichier .fastq---
 fasterq-dump /home/your_eid/PRJEB51899/ --split-files --threads 8
 ```
-
+This method also allows downloading, but you would not use it in the current context. <br>
 ```
 wget https://ftp.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByRun/sra/DRR/DRR504/DRR504715/DRR504715.sra
 ```
@@ -62,34 +62,42 @@ fastqc -t 8 -o "$OUTDIR" /home/maxenjac/data/Spiroplasma/DRR504715.fastq
 Raw sequencing reads often contain technical artifacts such as adapter sequences, low-quality bases at the read ends, and sequencing errors. If these issues are not removed, they can negatively affect downstream analyses, including read mapping, genome assembly, and variant calling. Trimming tools like Trimmomatic are used to clean raw FASTQ files by removing adapters and low-quality regions, and by discarding reads that are too short after trimming. This preprocessing step improves the overall quality of the data, increases mapping accuracy, reduces false positives, and leads to more reliable biological results.
 
 ```
-##!/bin/bash
+#!/bin/bash
 #SBATCH --job-name=porechop
 #SBATCH --time=12:00:00
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=64G
+#SBATCH --mem=32G
+#SBATCH --cpus-per-task=2
 #SBATCH --mail-user=maxence.jacquet@unamur.be
 #SBATCH --mail-type=ALL
 
-set -euo pipefail
 
 module purge
+module load releases/2021b
 module load Porechop/0.2.4-GCCcore-11.2.0
 
-# --- Scratch ---
-SCRATCH="$HOME/scratch/$SLURM_JOB_ID"
-mkdir -p "$SCRATCH"
-cd "$SCRATCH"
+# ---Aller dans le scratch du job---
+cd "$SLURM_TMPDIR" || exit 1
 
-# ---Copier les fichiers nécessaires dans scratch---
-cp /home/maxenjac/data/DRR504715/DRR504715.fastq .
+# ---Copier les fichiers ne�cessaires dans  scratch---
+cp /home/maxenjac/ESBOE2116/data/rawdata/DRR504715.fastq .
 
 # ---Lancer Porechop---
-porechop -i DRR504715.fastq -o DRR504715.trim.fastq -t 4
+porechop -i DRR504715.fastq -o DRR504715.trim.fastq -t 2
 
-# ---Copier le résultat final dans le dossier permanent---
-cp DRR504715.trim.fastq /home/maxenjac/results/porechop/
+# ---Copier le résultat final dans le dossier permanetn---
+cp DRR504715.trim.fastq /home/maxenjac/ESBOE2116/data/rawdata/
 ```
+> [!TIP]
+> The modules may not load correctly. Type the following commands outside of the scripts. <br>
+```
+module load releases/2021b
+
+module load Porechop/0.2.4-GCCcore-11.2.0
+
+#The following command will show you a path that confirms porechop has been loaded.
+which porechop
+```
+
 # 4.Quality filtering
 
 ## Why using fastqc after trimming is important in data analysis
