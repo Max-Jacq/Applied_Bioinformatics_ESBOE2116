@@ -45,14 +45,16 @@ You can find more information on the following website: https://olvtools.com/en/
 #SBATCH --mail-user=maxence.jacquet@unamur.be
 #SBATCH --mail-type=END,FAIL
 
+# ---Charge les modules nécessaires---
 module purge
 module load releases/2022b
 module load FastQC/0.11.9-Java-11
 
-# Dossier de sortie
+# ---Création du dossier de sortie---
 OUTDIR=/home/maxenjac/results/FastQC/DRR504175
 mkdir -p "$OUTDIR"
 
+ # ---Analyse FastQC du fichier .fastq---
 fastqc -t 8 -o "$OUTDIR" /home/maxenjac/data/Spiroplasma/DRR504715.fastq
 ```
 
