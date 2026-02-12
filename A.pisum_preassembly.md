@@ -11,15 +11,15 @@ Here is the NCBI link: https://www.ncbi.nlm.nih.gov/sra/DRR504715 <br>
 #SBATCH --output=PRJEB51899.out
 #SBATCH --error=PRJEB51899.err
 
-# ---Charge les modules nécessaires---
+# ---Load the necessary modules---
 module purge
 module load releases/2020b
 module load SRA-Toolkit/2.10.9-gompi-2020b
 
-# ---Téléchargement du fichier de séquençage depuis la base de données SRA (Sequence Read Archive)---
+# ---Downloading the sequencing file from the SRA (Sequence Read Archive) database---
 prefetch PRJEB51899
 
-# ---Conversion rapide du fichier SRA en fichier .fastq---
+# ---Quick conversion of SRA files to .fastq files---
 fasterq-dump /home/your_eid/PRJEB51899/ --split-files --threads 8
 ```
 This method also allows downloading, but you would not use it in the current context. <br>
@@ -45,16 +45,16 @@ You can find more information on the following website: https://olvtools.com/en/
 #SBATCH --mail-user=maxence.jacquet@unamur.be
 #SBATCH --mail-type=END,FAIL
 
-# ---Charge les modules nécessaires---
+# ---Load the necessary modules---
 module purge
 module load releases/2022b
 module load FastQC/0.11.9-Java-11
 
-# ---Création du dossier de sortie---
+# ---Creating the discharge file---
 OUTDIR=/home/maxenjac/results/FastQC/DRR504175
 mkdir -p "$OUTDIR"
 
- # ---Analyse FastQC du fichier .fastq---
+ # ---FastQC analysis of the .fastq file---
 fastqc -t 8 -o "$OUTDIR" /home/maxenjac/data/Spiroplasma/DRR504715.fastq
 ```
 
@@ -77,16 +77,16 @@ module purge
 module load releases/2021b
 module load Porechop/0.2.4-GCCcore-11.2.0
 
-# ---Aller dans le scratch du job---
+# ---Go to the job scratch---
 cd "$SLURM_TMPDIR" || exit 1
 
-# ---Copier les fichiers ne�cessaires dans  scratch---
+# ---Copy the necessary files to scratch---
 cp /home/maxenjac/ESBOE2116/data/rawdata/DRR504715.fastq .
 
-# ---Lancer Porechop---
+# ---Launch Porechop---
 porechop -i DRR504715.fastq -o DRR504715.trim.fastq -t 2
 
-# ---Copier le résultat final dans le dossier permanetn---
+# ---Copy the final result to the permanent folder---
 cp DRR504715.trim.fastq /home/maxenjac/ESBOE2116/data/rawdata/
 ```
 > [!TIP]
