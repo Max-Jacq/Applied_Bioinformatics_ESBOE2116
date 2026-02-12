@@ -39,8 +39,39 @@ At the end of the process, Flye generates several files in the output directory:
   
   -`repeat_graph` and `assembly_info.txt`: information on assembly and detected repetitions
 
+# 2.Verification of assembly quality
 
-  # 2.Assessment of genome completeness with BUSCO
+## 2.1.Local installation of Seqkit
+```
+#From your first path, we will create the bin folder.
+mkdir -p ~/bin
+wget https://github.com/shenwei356/seqkit/releases/download/v2.6.1/seqkit_linux_amd64.tar.gz
+tar -xzf seqkit_linux_amd64.tar.gz
+mv seqkit ~/bin/
+export PATH=$HOME/bin:$PATH
+```
+## 2.2.Flye assembly stats
+```
+seqkit stats assembly.fasta
+```
+
+## 2.3.Expected results
+```
+file            format  type  num_seqs      sum_len  min_len    avg_len    max_len
+assembly.fasta  FASTA   DNA      2,793  527,410,710      514  188,833.1  7,185,291
+```
+Biological interpretation
+  -**num_seqs = 2,793**. Flye generated a large number of contigs. For a eukaryotic genome (such as A. pisum, 500–540 Mb), this is not surprising with unpolished long reads and imperfect coverage. Small contigs (<10 kb) are often repetitive fragments or errors.
+
+  -**sum_len = 527 Mb**. Very close to the expected size of the aphid genome (~517–540 Mb depending on the strain). So Flye has assembled almost the entire genome.
+
+  -**min_len = 514 bp**. Many small fragments, typical of repeats, transposons, or assembly errors.
+
+  -**avg_len = 188 kb**. The majority of contigs are still quite long, which is good for a long-read assembly.
+
+  -**max_len = 7.18 Mb**. A very long contig, probably a large part of a chromosome or a contig containing several scaffolds concatenated by Flye.
+
+  # 3.Assessment of genome completeness with BUSCO
 After assembling a genome, it is essential to evaluate its quality and completeness. To do this, we use BUSCO (**Benchmarking Universal Single-Copy Orthologs**), a tool that measures the presence of universal and conserved genes in a given taxonomic group.
 
 BUSCO provides an estimate of genome completeness by categorizing the universal genes detected as:
@@ -90,7 +121,7 @@ mkdir -p ${OUTDIR}
 busco -i ${ASSEMBLY} -o busco_spiroplasma -l ${LINEAGE} -m genome -c ${THREADS} --out_path ${OUTDIR}
 ```
 
-## 2.1.Expected results
+## 3.1.Expected results
 
 At the end of the run, BUSCO produces several files in the output directory:
 
@@ -100,7 +131,7 @@ At the end of the run, BUSCO produces several files in the output directory:
   
   -`run_*/`: folder containing intermediate results
 
-## 2.2.Our results
+## 3.2.Our results
 ```
 # BUSCO version is: 5.4.7
 # The lineage dataset is: insecta_odb10 (Creation date: 2024-01-08, number of genomes: 75, number of BUSCOs: 1367)
