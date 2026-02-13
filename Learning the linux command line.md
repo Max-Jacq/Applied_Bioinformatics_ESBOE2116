@@ -264,6 +264,14 @@ cat file.txt | grep "word" | wc -l  # does the same thing as above
 
 grep -o "word" file.txt | wc -l
 
+#If you want to search for a specific pattern or sequence (for instance, inside file.gfa from an assembly)
+
+grep "^S" assembly_graph.gfa | grep edge_###
+
+#And if you want to extract it, you can do so with the awk command
+
+awk '$1=="S" && $2=="edge_###" {print ">edge_###\n"$3}' assembly_graph.gfa > edge_###.fasta
+#$S are the search engines, and after the “>” you name your output file.
 ```
 
 #### Copying a file to and from a remote server
