@@ -4,23 +4,29 @@ Here is the NCBI link: https://www.ncbi.nlm.nih.gov/sra/DRR504715 <br>
 
 ```
 #!/bin/bash
-#SBATCH --job-name=PRJEB51899
+#SBATCH --job-name=SRR11853141
 #SBATCH --time=48:00:00
 #SBATCH --mem=64G
 #SBATCH --cpus-per-task=8
-#SBATCH --output=PRJEB51899.out
-#SBATCH --error=PRJEB51899.err
+#SBATCH --output=SRR11853141.out
+#SBATCH --error=SRR11853141.err
 
-# ---Load the necessary modules---
-module purge
 module load releases/2020b
 module load SRA-Toolkit/2.10.9-gompi-2020b
 
-# ---Downloading the sequencing file from the SRA (Sequence Read Archive) database---
-prefetch PRJEB51899
+# --- SCRATCH ---
+SCRATCH=/scratch/maxenjac/$SLURM_JOB_ID
+mkdir -p "$SCRATCH"
+cd "$SCRATCH"
 
-# ---Quick conversion of SRA files to .fastq files---
-fasterq-dump /home/your_eid/PRJEB51899/ --split-files --threads 8
+prefetch SRR11853141
+
+# --- Fast conversion to FASTQ ---
+fasterq-dump SRR11853141 --split-files --threads 8
+
+
+# --- Copy the final files to the permanent folder already existing via prefetch ---
+mv SRR11853141*.fastq /home/maxenjac/scripts/SRR11853141/
 ```
 This method also allows downloading, but you would not use it in the current context. <br>
 ```
