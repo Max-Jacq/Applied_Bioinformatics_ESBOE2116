@@ -69,7 +69,7 @@ fastqc -t 8 -o "$OUTDIR" /home/maxenjac/data/Spiroplasma/DRR504715.fastq
 
 Raw sequencing reads often contain technical artifacts such as adapter sequences, low-quality bases at the read ends, and sequencing errors. If these issues are not removed, they can negatively affect downstream analyses, including read mapping, genome assembly, and variant calling. Trimming tools like Porechop are used to clean raw FASTQ files by detecting and removing adapters, trimming low-quality regions, and discarding reads that are too short after processing. Porechop is particularly well suited for long-read sequencing data, such as those produced by Oxford Nanopore or PacBio, where adapters can appear internally or in complex patterns. This preprocessing step improves the overall quality of the data, increases mapping accuracy, reduces false positives, and leads to more reliable biological results.
 
-# 2.1. Porechop
+## 2.1. Porechop
 ```
 #!/bin/bash
 #SBATCH --job-name=porechop
@@ -106,10 +106,10 @@ module load Porechop/0.2.4-GCCcore-11.2.0
 #The following command will show you a path that confirms porechop has been loaded.
 which porechop
 ```
-# 2.2. Skewer
+## 2.2. Skewer
 Skewer is a bioinformatics tool used to clean high-throughput sequencing data, particularly short reads from technologies such as Illumina. It detects and removes artificial adapters added during sequencing, filters or truncates low-quality bases, and processes both single-end and paired-end reads. This cleaning step is essential for short reads, which are more susceptible to errors and adapter contamination. By removing these artifacts and improving read quality, Skewer ensures more reliable results for subsequent analyses, such as reference genome alignment, variant detection, expression quantification, or de novo assembly. In summary, Skewer prepares short reads to be clean and of high quality, which is essential for accurate and robust bioinformatic analyses.
 
-# 2.2.1. Installing Skewer in a personal folder (if the tool is not present in the clusters)
+### 2.2.1. Installing Skewer in a personal folder (if the tool is not present in the clusters)
 **Préparer `~/bin`** <br>
 ```
 mkdir -p ~/bin
@@ -141,7 +141,7 @@ which skewer
 skewer --help
 ```
 
-# 2.2.2. Launch skewer
+### 2.2.2. Launch skewer
 ```
 #!/bin/bash
 #SBATCH --job-name=Skewer
