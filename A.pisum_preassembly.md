@@ -14,18 +14,18 @@ Here is the NCBI link: https://www.ncbi.nlm.nih.gov/sra/DRR504715 <br>
 module load releases/2020b
 module load SRA-Toolkit/2.10.9-gompi-2020b
 
-# --- SCRATCH ---
+# ---SCRATCH---
 SCRATCH=/scratch/maxenjac/$SLURM_JOB_ID
 mkdir -p "$SCRATCH"
 cd "$SCRATCH"
 
 prefetch SRR11853141
 
-# --- Fast conversion to FASTQ ---
+# ---Fast conversion to FASTQ---
 fasterq-dump SRR11853141 --split-files --threads 8
 
 
-# --- Copy the final files to the permanent folder already existing via prefetch ---
+# ---Copy the final files to the permanent folder already existing via prefetch---
 mv SRR11853141*.fastq /home/maxenjac/scripts/SRR11853141/
 ```
 This method also allows downloading, but you would not use it in the current context. <br>
@@ -67,8 +67,9 @@ fastqc -t 8 -o "$OUTDIR" /home/maxenjac/data/Spiroplasma/DRR504715.fastq
 # 2.Adapter trimming
 ## Why trimming is important in NGS data analysis
 
-Raw sequencing reads often contain technical artifacts such as adapter sequences, low-quality bases at the read ends, and sequencing errors. If these issues are not removed, they can negatively affect downstream analyses, including read mapping, genome assembly, and variant calling. Trimming tools like Trimmomatic are used to clean raw FASTQ files by removing adapters and low-quality regions, and by discarding reads that are too short after trimming. This preprocessing step improves the overall quality of the data, increases mapping accuracy, reduces false positives, and leads to more reliable biological results.
+Raw sequencing reads often contain technical artifacts such as adapter sequences, low-quality bases at the read ends, and sequencing errors. If these issues are not removed, they can negatively affect downstream analyses, including read mapping, genome assembly, and variant calling. Trimming tools like Porechop are used to clean raw FASTQ files by detecting and removing adapters, trimming low-quality regions, and discarding reads that are too short after processing. Porechop is particularly well suited for long-read sequencing data, such as those produced by Oxford Nanopore or PacBio, where adapters can appear internally or in complex patterns. This preprocessing step improves the overall quality of the data, increases mapping accuracy, reduces false positives, and leads to more reliable biological results.
 
+# 2.1. Porechop
 ```
 #!/bin/bash
 #SBATCH --job-name=porechop
@@ -104,6 +105,65 @@ module load Porechop/0.2.4-GCCcore-11.2.0
 
 #The following command will show you a path that confirms porechop has been loaded.
 which porechop
+```
+# 2.2. Skewer
+Skewer is a bioinformatics tool used to clean high-throughput sequencing data, particularly short reads from technologies such as Illumina. It detects and removes artificial adapters added during sequencing, filters or truncates low-quality bases, and processes both single-end and paired-end reads. This cleaning step is essential for short reads, which are more susceptible to errors and adapter contamination. By removing these artifacts and improving read quality, Skewer ensures more reliable results for subsequent analyses, such as reference genome alignment, variant detection, expression quantification, or de novo assembly. In summary, Skewer prepares short reads to be clean and of high quality, which is essential for accurate and robust bioinformatic analyses.
+
+# 2.2.1. Installing Skewer in a personal folder (if the tool is not present in the clusters)
+**Préparer `~/bin`** <br>
+```
+mkdir -p ~/bin
+echo $PATH
+echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
+source ~/.bashrc
+```
+
+**Download Skewer** <br>
+```
+wget https://github.com/relipmoc/skewer/archive/refs/heads/master.zip
+unzip master.zip
+cd skewer-master
+```
+
+**Load the compatible compiler** <br>
+```
+module purge
+module load GCC/7.1.0-2.28
+#Then, do a check
+```
+
+**Move Skewer in `~/bin`** <br>
+```
+cp skewer ~/bin/
+
+#And, check it out
+which skewer
+skewer --help
+```
+
+# 2.2.2. Launch skewer
+```
+#!/bin/bash
+#SBATCH --job-name=Skewer
+#SBATCH --time=06:00:00
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=64G
+#SBATCH --mail-user=maxence.jacquet@unamur.be
+#SBATCH --mail-type=ALL
+#SBATCH --partition=batch
+#SBATCH --output=skewer_output.txt
+#SBATCH --error=skewer_error.txt
+
+set -euo pipefail
+
+# ---Scratch---
+SCRATCH="$HOME/scratch/$SLURM_JOB_ID"
+mkdir -p "$SCRATCH"
+cd "$SCRATCH"
+
+# ---Skewer is in ~/bin → no modules required--- 
+skewer -t 8 -o /home/maxenjac/data/s_kunkelii/ /home/maxenjac/data/s_kunkelii/SRR9495982.fastq
 ```
 
 # 4.Quality filtering
