@@ -11,6 +11,8 @@ Here is the NCBI link: https://www.ncbi.nlm.nih.gov/sra/DRR504715 <br>
 #SBATCH --output=SRR11853141.out
 #SBATCH --error=SRR11853141.err
 
+# ---Clean environment and Load the necessary modules---
+module purge
 module load releases/2020b
 module load SRA-Toolkit/2.10.9-gompi-2020b
 
@@ -51,7 +53,7 @@ You can find more information on the following website: https://olvtools.com/en/
 #SBATCH --mail-user=maxence.jacquet@unamur.be
 #SBATCH --mail-type=END,FAIL
 
-# ---Load the necessary modules---
+# ---Clean environment and Load the necessary modules---
 module purge
 module load releases/2022b
 module load FastQC/0.11.9-Java-11
@@ -79,7 +81,7 @@ Raw sequencing reads often contain technical artifacts such as adapter sequences
 #SBATCH --mail-user=maxence.jacquet@unamur.be
 #SBATCH --mail-type=ALL
 
-
+# ---Clean environment and Load the necessary modules---
 module purge
 module load releases/2021b
 module load Porechop/0.2.4-GCCcore-11.2.0
@@ -155,9 +157,7 @@ skewer --help
 #SBATCH --output=skewer_output.txt
 #SBATCH --error=skewer_error.txt
 
-set -euo pipefail
-
-# ---Scratch---
+# ---SCRATCH---
 SCRATCH="$HOME/scratch/$SLURM_JOB_ID"
 mkdir -p "$SCRATCH"
 cd "$SCRATCH"
