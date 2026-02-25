@@ -165,3 +165,6 @@ Dependencies and versions:
         busco: 5.4.7
 
 ```
+
+# 4. Additional resource: assembly with MEGAhit
+The tool cannot be used in relation to the previous steps, but may prove to be a useful resource when dealing with bacterial data with short reads. `MEGAhit` is an ultra-fast, memory-efficient de novo NGS assembler designed for large and complex metagenomic datasets. It uses succinct Bruijn graphs (SdBG) to assemble data on a single node without pre-processing such as partitioning or normalisation. It is particularly effective for metagenomics of microorganisms in soil, water, and the human gut.
