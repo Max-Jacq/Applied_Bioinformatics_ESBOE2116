@@ -15,6 +15,7 @@ In this project, we aim to assemble the genome of *A. pisum* from Nanopore reads
 #SBATCH --error=flye_%j.err
 #SBATCH --mail-user=maxence.jacquet@unamur.be
 
+# ---Clean environment and Load the necessary modules---
 module purge
 module load releases/2022b
 module load Flye
@@ -98,7 +99,7 @@ BUSCO provides an estimate of genome completeness by categorizing the universal 
 #SBATCH --error=busco_%j.err
 #SBATCH --mail-user=maxence.jacquet@unamur.be
 
-## --- Clean environment ---
+# ---Clean environment and Load the necessary modules---
 module purge
 module load releases/2022b
 module load BUSCO
@@ -113,7 +114,7 @@ OUTDIR=/home/maxenjac/results/busco/spiroplasma
 THREADS=8
 LINEAGE=insecta_odb10
 
-# LINEAGE = un ensemble de gène universels et conserves qu'on s'attend à rtrouver une seule fois dans tous les génomes d'un groupe donné.
+# LINEAGE:a set of universal and conserved genes that are expected to be found only once in all genomes of a given group.
 
 # --- Create output directory ---
 mkdir -p ${OUTDIR}
@@ -168,3 +169,41 @@ Dependencies and versions:
 
 # 4. Additional resource: assembly with MEGAhit
 The tool cannot be used in relation to the previous steps, but may prove to be a useful resource when dealing with bacterial data with short reads. `MEGAhit` is an ultra-fast, memory-efficient de novo NGS assembler designed for large and complex metagenomic datasets. It uses succinct Bruijn graphs (SdBG) to assemble data on a single node without pre-processing such as partitioning or normalisation. It is particularly effective for metagenomics of microorganisms in soil, water, and the human gut.
+You can find more information on the following website: [https://olvtools.com/en/documents/fastqc](https://www.metagenomics.wiki/tools/assembly/megahit)
+
+```
+#!/bin/bash
+#SBATCH --job-name=megahit_s_kunkelii
+#SBATCH --time=1:00:00
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=32G
+#SBATCH --mail-user=maxence.jacquet@unamur.be
+
+# ---Clean environment and Load the necessary modules---
+module purge
+module load releases/2022b
+module load MEGAHIT/1.2.9-GCCcore-12.2.0
+ 
+# ---SCRATCH---
+SCRATCH="$HOME/scratch/$SLURM_JOB_ID"
+mkdir -p "$SCRATCH"
+cd "$SCRATCH"
+ 
+# ---Copy the reads---
+READS="/home/maxenjac/data/s_kunkelii/s_kunkelii-trimmed.fastq"
+cp "$READS" .
+ 
+# ---Parameters---
+THREADS=8
+MEMORY=0.9   # fraction RAM utilisable (90%)
+OUTDIR="$SCRATCH/megahit_output"
+ 
+# ---Assembly---
+megahit -r $(basename "$READS") -o ${OUTDIR} -t ${THREADS} --memory ${MEMORY}
+ 
+# ---Copy results---
+PERM_DIR="/home/maxenjac/results/megahit"
+mkdir -p "$PERM_DIR"
+cp ${OUTDIR}/final.contigs.fa "$PERM_DIR/"
+```
