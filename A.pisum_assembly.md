@@ -173,7 +173,7 @@ You can find more information on the following website: [https://olvtools.com/en
 
 ```
 #!/bin/bash
-#SBATCH --job-name=megahit_s_kunkelii
+#SBATCH --job-name=megahit_yourfile
 #SBATCH --time=1:00:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
@@ -191,12 +191,12 @@ mkdir -p "$SCRATCH"
 cd "$SCRATCH"
  
 # ---Copy the reads---
-READS="/home/maxenjac/data/s_kunkelii/s_kunkelii-trimmed.fastq"
+READS="/home/maxenjac/data/folder/files_trimmed.fastq"
 cp "$READS" .
  
 # ---Parameters---
 THREADS=8
-MEMORY=0.9   # fraction RAM utilisable (90%)
+MEMORY=0.9
 OUTDIR="$SCRATCH/megahit_output"
  
 # ---Assembly---
