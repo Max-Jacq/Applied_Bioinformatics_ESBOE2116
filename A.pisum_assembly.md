@@ -23,7 +23,7 @@ module load Flye
 READS=/home/maxenjac/results/trim_galore/spiroplasma/DRR504715_trimmed.fq
 OUTDIR=/home/maxenjac/results/flye/spiroplasma
 THREADS=8
-GENOME_SIZE=1.8m
+GENOME_SIZE=1.8M
 
 mkdir -p ${OUTDIR}
 
